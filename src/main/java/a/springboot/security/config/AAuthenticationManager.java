@@ -29,9 +29,9 @@ public class AAuthenticationManager implements ReactiveAuthenticationManager {
 	
 	@Override
 	public Mono<Authentication> authenticate(Authentication authentication) {
+		log.info("[---] authentication: {}", authentication);
+		
 		String authToken = authentication.getCredentials().toString();
-
-		log.info("[-- {} --] authentication: {}", this.getClass().getSimpleName(), authentication);
 
 		try {
 			if (!jwtUtil.validateToken(authToken)) {
@@ -43,7 +43,7 @@ public class AAuthenticationManager implements ReactiveAuthenticationManager {
 			rolesMap.forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
 			return Mono.just(new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities));
 		} catch (Exception e) {
-			log.info("[-- {} --] authentication: {}", this.getClass().getSimpleName(), e.getMessage());
+			log.info("[---]ERR authentication: {}", e.getMessage());
 			return Mono.empty();
 		}
 	}

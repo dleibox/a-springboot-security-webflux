@@ -34,7 +34,7 @@ public class JwtUtilHmacImpl implements JwtUtil {
 
 	@PostConstruct
 	public void init() {
-		log.info("[-- {} --] init: {}", this.getClass().getSimpleName(), "post construct");
+		log.info("[---] init: post construct");
 		this.key = Keys.hmacShaKeyFor(secret.getBytes());
 	}
 

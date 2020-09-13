@@ -41,23 +41,24 @@ public class AuthController {
 //	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Mono<ResponseEntity<?>> welcome(Principal principal) {
-		log.info("[-- {} --] principal: {}", this.getClass().getSimpleName(), principal);
-		Map<String, String> obj = new HashMap<String, String>() {{
-			put("hi", "welcome");
-			put("login", "/login");
-			put("user", "/resource/user");
-			put("admin", "/resource/admin");
-			put("user-or-admin", "/resource/user-or-admin");
-		}};
+		log.info("[---] principal: {}", principal);
+		Map<String, String> obj = new HashMap<String, String>() {
+			{
+				put("hi", "welcome");
+				put("login", "/login");
+				put("user", "/resource/user");
+				put("admin", "/resource/admin");
+				put("user-or-admin", "/resource/user-or-admin");
+			}
+		};
 		return Mono.just(ResponseEntity.ok(obj));
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Mono<ResponseEntity<?>> login(@RequestBody AuthRequest ar) {
-		log.info("[-- {} --] req: {}", this.getClass().getSimpleName(), ar);
+		log.info("[---] req: {}", ar);
 		return userService.findByUsername(ar.getUsername()).map((userDetails) -> {
-			log.info("[-- {} --] passwordEncoder: {}", this.getClass().getSimpleName(),
-					passwordEncoder.encode(ar.getPassword()));
+			log.info("[---] passwordEncoder: {}", passwordEncoder.encode(ar.getPassword()));
 			if (passwordEncoder.matches(ar.getPassword(), userDetails.getPassword())) {
 				return ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails)));
 			} else {

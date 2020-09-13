@@ -86,7 +86,7 @@ public class JwtUtilRsaImpl implements JwtUtil {
 
 	@PostConstruct
 	public void init() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		log.info("[-- {} --] init: {}", this.getClass().getSimpleName(), "post construct");
+		log.info("[---] init: post construct");
 		
 		// version 1:
 //		keyPair = RsaProvider.generateKeyPair(2048); // Keys.keyPairFor(SignatureAlgorithm.RS256);
@@ -137,7 +137,7 @@ public class JwtUtilRsaImpl implements JwtUtil {
 
 	@Override
 	public String generateToken(UserDetails user) {
-		log.info("[-- {} --] userDetails: {}", this.getClass().getSimpleName(), user);
+		log.info("[---] userDetails: {}", user);
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("role", user.getAuthorities().stream().map(a -> a.getAuthority()).toArray()); // ..getRoles());
 		// NOTE: Calling setClaims will overwrite any existing claim name/value pairs

@@ -28,7 +28,7 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
-		log.info("[-- {} --] securitygWebFilterChain: {}", this.getClass().getSimpleName(), http.getClass().getSimpleName());
+		log.info("[---] securitygWebFilterChain: {}", http.getClass().getSimpleName());
 		return http
 			.exceptionHandling()
 			.authenticationEntryPoint((swe, e) -> {
@@ -47,8 +47,8 @@ public class SecurityConfig {
 			.securityContextRepository(securityContextRepository)
 			.authorizeExchange()
 			.pathMatchers(HttpMethod.OPTIONS).permitAll()
-			.pathMatchers("/login").permitAll()
-			.pathMatchers("/").permitAll()
+			.pathMatchers(HttpMethod.POST, "/login").permitAll()
+			.pathMatchers(HttpMethod.GET, "/").permitAll()
 			.anyExchange().authenticated()
 			.and().build();
 	}

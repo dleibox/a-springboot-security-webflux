@@ -35,7 +35,7 @@ public class PBKDF2Encoder implements PasswordEncoder {
 	 */
 	@Override
 	public String encode(CharSequence cs) {
-		log.info("[-- {} --] encode: {}", this.getClass().getSimpleName(), cs);
+		log.info("[---] encode: {}", cs);
 		try {
 			byte[] result = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")
 					.generateSecret(

@@ -19,21 +19,21 @@ public class ResourceController {
 	@RequestMapping(value = "/resource/user", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('USER')")
 	public Mono<ResponseEntity<?>> user() {
-		log.info("[-- {} --] resource: {}", this.getClass().getSimpleName(), "user");
+		log.info("[---] resource: user");
 		return Mono.just(ResponseEntity.ok(new Message("Content for user")));
 	}
 	
 	@RequestMapping(value = "/resource/admin", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
 	public Mono<ResponseEntity<?>> admin() {
-		log.info("[-- {} --] resource: {}", this.getClass().getSimpleName(), "admin");
+		log.info("[---] resource: admin");
 		return Mono.just(ResponseEntity.ok(new Message("Content for admin")));
 	}
 	
 	@RequestMapping(value = "/resource/user-or-admin", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public Mono<ResponseEntity<?>> userOrAdmin() {
-		log.info("[-- {} --] resource: {}", this.getClass().getSimpleName(), "user or admin");
+		log.info("[---] resource: user or admin");
 		return Mono.just(ResponseEntity.ok(new Message("Content for user or admin")));
 	}
 }

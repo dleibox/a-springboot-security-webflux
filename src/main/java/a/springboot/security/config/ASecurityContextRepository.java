@@ -16,10 +16,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Component
-public class ASecurityContextRepository implements ServerSecurityContextRepository{
-	
+public class ASecurityContextRepository implements ServerSecurityContextRepository {
+
 	private static final Logger log = LoggerFactory.getLogger(ASecurityContextRepository.class);
-	
+
 	@Autowired
 	private AAuthenticationManager authenticationManager;
 
@@ -30,7 +30,7 @@ public class ASecurityContextRepository implements ServerSecurityContextReposito
 
 	@Override
 	public Mono<SecurityContext> load(ServerWebExchange swe) {
-		log.info("[-- {} --] load: {}", this.getClass().getSimpleName(), swe.getClass().getSimpleName());
+		log.info("[---] load: {}", swe.getClass().getSimpleName());
 
 		ServerHttpRequest request = swe.getRequest();
 		String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
@@ -38,12 +38,10 @@ public class ASecurityContextRepository implements ServerSecurityContextReposito
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			String authToken = authHeader.substring(7);
 			Authentication auth = new UsernamePasswordAuthenticationToken(authToken, authToken);
-			return this.authenticationManager.authenticate(auth).map((authentication) -> {
-				return new SecurityContextImpl(authentication);
-			});
+			return this.authenticationManager.authenticate(auth).map(SecurityContextImpl::new);
 		} else {
 			return Mono.empty();
 		}
 	}
-	
+
 }
