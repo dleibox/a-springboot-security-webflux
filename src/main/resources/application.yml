@@ -1,0 +1,11 @@
+app:
+  password:
+    encoder:
+      salt: pepper # secret key used by password encoding
+      iteration: 10000 # number of hash iteration
+      keylength: 256 # hash width in bits
+
+  jjwt:
+    issuer: a-springboot-security-webflux
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 900 # 15 * 60 seconds
