@@ -169,16 +169,6 @@ public class JwtUtilRsaImpl implements JwtUtil {
 	}
 
 	@Override
-	public String getUsernameFromToken(String token) {
-		return getAllClaimsFromToken(token).getSubject();
-	}
-
-	@Override
-	public Date getExpirationDateFromToken(String token) {
-		return getAllClaimsFromToken(token).getExpiration();
-	}
-
-	@Override
 	public String generateToken(UserDetails user) {
 		log.info("[---] userDetails: {}", user);
 		Map<String, Object> claims = new HashMap<>();

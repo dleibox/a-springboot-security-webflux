@@ -43,16 +43,6 @@ public class JwtUtilHmacImpl implements JwtUtil {
 		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 	}
 
-	@Override
-	public String getUsernameFromToken(String token) {
-		return getAllClaimsFromToken(token).getSubject();
-	}
-
-	@Override
-	public Date getExpirationDateFromToken(String token) {
-		return getAllClaimsFromToken(token).getExpiration();
-	}
-
 	private Boolean isTokenExpired(String token) {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(new Date());

@@ -9,9 +9,13 @@ import io.jsonwebtoken.Claims;
 public interface JwtUtil {
 	Claims getAllClaimsFromToken(String token);
 
-	String getUsernameFromToken(String token);
+	default String getSubjectFromToken(String token) {
+		return getAllClaimsFromToken(token).getSubject();
+	}
 
-	Date getExpirationDateFromToken(String token);
+	default Date getExpirationDateFromToken(String token) {
+		return getAllClaimsFromToken(token).getExpiration();
+	}
 
 	String generateToken(UserDetails user);
 
